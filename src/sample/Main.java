@@ -1,71 +1,73 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import sample.Modelos.Conexion;
-import sample.Vistas.CRUDEmpleados;
-import sample.Vistas.CRUDMesas;
-import sample.Vistas.CRUDPuestos;
-import sample.Vistas.FrmEmpleado;
+import sample.Vistas.*;
+
 
 public class Main extends Application {
-    MenuBar mnbTaqueria;
-    Menu menConsultar;
-    Menu menSalir;
-    MenuItem mitCEmpleado,mitCMesa,mitCPuesto;
-    MenuItem mitBye;
     Scene escena;
-    BorderPane brpPrincipal;
     HBox hBox;
-    VBox vBox;
-    Button btnOrden,btnPagar;
+    VBox vBox,vBAd,vBMe;
+    Button btnAdmin,btnMesero;
+    ImageView imageView = new ImageView("sample/Imagenes/Admin.png");
+    ImageView imageView2 = new ImageView("sample/Imagenes/mesero.png");
+    Label lblA=new Label("Iniciar \ncomo Administrador");
+    Label lblM=new Label("Iniciar \ncomo Mesero");
     public Main() {
     }
     @Override
     public void start(Stage primaryStage) throws Exception{
-        brpPrincipal = new BorderPane();
-        mnbTaqueria = new MenuBar();
-        brpPrincipal.setTop(mnbTaqueria);
-        menConsultar = new Menu("Consultas");
-        menSalir = new Menu("Salir");
-        mitCEmpleado = new MenuItem("Empleados");
-        mitCEmpleado.setOnAction(event -> OpcionMenu(1));
-        mitCMesa=new MenuItem("Mesas");
-        mitCMesa.setOnAction(event-> OpcionMenu(2));
-        mitCPuesto=new MenuItem("Puestos");
-        mitCPuesto.setOnAction(event-> OpcionMenu(3));
-        mitBye = new MenuItem("Bye");
-        mitBye.setOnAction((event) -> OpcionMenu(4));
-
+        lblA.setFont(Font.font("Cambria", 20));
+        lblM.setFont(Font.font("Cambria", 20));
+        lblA.setTextAlignment(TextAlignment.CENTER);
+        lblM.setTextAlignment(TextAlignment.CENTER);
+        imageView.setFitHeight(100);
+        imageView.setFitWidth(100);
+        imageView2.setFitHeight(100);
+        imageView2.setFitWidth(100);
         vBox =new VBox();
+        vBAd =new VBox();
+        vBMe =new VBox();
         hBox=new HBox();
-        btnOrden=new Button("Generar Nueva Orden");
-        btnPagar=new Button("Pagar una orden");
-        //btnOrden.addEventHandler(MouseEvent.MOUSE_CLICKED,);
-       // btnPagar.addEventHandler(MouseEvent.MOUSE_CLICKED,);
+        btnAdmin= new Button();
+        btnAdmin.setGraphic(imageView);
+        btnAdmin.setMinSize(148, 148);
+        btnAdmin.setMaxSize(148, 148);
+        btnAdmin.setOnAction(event-> OpcionMenu(1));
 
-        hBox.getChildren().addAll(btnOrden,btnPagar);
+        btnMesero= new Button();
+        btnMesero.setGraphic(imageView2);
+        btnMesero.setMinSize(148, 148);
+        btnMesero.setMaxSize(148, 148);
+        btnMesero.setOnAction(event-> OpcionMenu(2));
 
-
-        menConsultar.getItems().addAll(mitCEmpleado,mitCMesa,mitCPuesto);
-        menSalir.getItems().add(mitBye);
-        mnbTaqueria.getMenus().addAll(menConsultar, menSalir);
-        vBox.getChildren().addAll(mnbTaqueria,hBox);
+        vBAd.getChildren().addAll(btnAdmin,lblA);
+        vBMe.getChildren().addAll(btnMesero,lblM);
+        vBAd.setAlignment(Pos.CENTER);
+        vBMe.setAlignment(Pos.CENTER);
+        vBAd.setPadding(new Insets(15, 15, 15, 12));
+        vBMe.setPadding(new Insets(15, 15, 15, 12));
+        hBox.getChildren().addAll(vBAd,vBMe);
+        hBox.setPadding(new Insets(15, 12, 15, 12));
+        hBox.setAlignment(Pos.CENTER);
+        vBox.getChildren().addAll(hBox);
+        vBox.setAlignment(Pos.CENTER);
         escena = new Scene(vBox, 300.0D, 275.0D);
+        escena.getStylesheets().add("sample/Estilos/estiloLogin.css");
         Conexion.CrearConexion(); //creamos conexion a bd
         primaryStage.setMaximized(true);
-        primaryStage.setTitle("Taqueria Chida");
+        primaryStage.setTitle("Login Taqueria");
         primaryStage.setScene(this.escena);
         primaryStage.show();
     }
@@ -73,19 +75,11 @@ public class Main extends Application {
     private void OpcionMenu(int i) {
         switch (i){
             case 1:
-                new CRUDEmpleados();
+                new Login(1);
                 break;
             case 2:
-                new CRUDMesas();
+                new Login(2);
                 break;
-            case 3:
-                new CRUDPuestos();
-                break;
-            case 4:
-               // new PistaAtletismo();
-                break;
-            case 20:
-                System.exit(0);
         }
     }
 

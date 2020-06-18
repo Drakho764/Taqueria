@@ -11,6 +11,15 @@ public class MesasDAO {
     private int idMesa;
     private int cantPer;
     private String ubic;
+    public String estado;
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 
     public int getIdMesa() {
         return idMesa;
@@ -37,8 +46,8 @@ public class MesasDAO {
     public void insMesas(){
 
         String query = "insert into Mesa " +
-                "(cantPersonas,ubicacion) " +
-                "values("+cantPer+",'"+ubic+"')";
+                "(cantPersonas,ubicacion,estado) " +
+                "values("+cantPer+",'"+ubic+"','"+estado+"')";
         try {
             Statement stmt = con.createStatement();
             stmt.executeUpdate(query);
@@ -48,7 +57,7 @@ public class MesasDAO {
     }
     public void updMesas(){
         String query = "update Mesa set cantPersonas="+cantPer+"" +
-                ",ubicacion='"+ubic+"' where " + "idMesa="+idMesa;
+                ",ubicacion='"+ubic+"',estado='"+estado+"' where " + "idMesa="+idMesa;
         try{
             Statement stmt = con.createStatement();
             stmt.executeUpdate(query);
@@ -66,6 +75,7 @@ public class MesasDAO {
                 objM.setIdMesa(res.getInt("idMesa"));
                 objM.setCantPer(res.getInt("cantPersonas"));
                 objM.setUbic(res.getString("ubicacion"));
+                objM.setEstado(res.getString("estado"));
                 listMs.add(objM);
             }
         }catch (Exception e){
@@ -86,17 +96,19 @@ public class MesasDAO {
             Statement stmt = Conexion.con.createStatement();
             ResultSet res = stmt.executeQuery(query);
            if(res.next()){
-               cantPer=res.getInt("cantPersonas");
+               estado=res.getString("estado");
                ubic=res.getString("ubicacion");
+
            }
             }
         catch (Exception e){
             e.printStackTrace();
         }
     }
+
     @Override
     public String toString() {
-        return ubic+ " (" + cantPer + ")";
+        return ubic+" Estado: "+estado+" No: "+idMesa;
     }
 
 

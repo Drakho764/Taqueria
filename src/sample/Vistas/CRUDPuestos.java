@@ -35,6 +35,7 @@ public class CRUDPuestos extends Stage {
         btnAgregar.setOnAction(event -> AgregarPuesto());
         vbox.getChildren().addAll(tbvPuestos,btnAgregar);
         escena = new Scene(vbox,620,300);
+        escena.getStylesheets().add("sample/Estilos/estiloLogin.css");
     }
     private void CrearTabla() {
         TableColumn<PuestosDAO,Integer> tbcIdPuesto = new TableColumn<>("ID");

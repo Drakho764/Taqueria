@@ -33,9 +33,12 @@ public class CRUDMesas extends Stage {
         tbvMesas = new TableView<>();
         CrearTabla();
         btnAgregar = new Button("Agregar Mesa");
+        btnAgregar.setMinSize(120, 60);
+        btnAgregar.setMaxSize(148, 74);
         btnAgregar.setOnAction(event -> AgregarMesa());
         vbox.getChildren().addAll(tbvMesas, btnAgregar);
         escena = new Scene(vbox, 620, 300);
+        escena.getStylesheets().add("sample/Estilos/estiloLogin.css");
     }
 
     private void CrearTabla() {
@@ -45,6 +48,8 @@ public class CRUDMesas extends Stage {
         tbccantPer.setCellValueFactory(new PropertyValueFactory<>("cantPer"));
         TableColumn<MesasDAO, String> tbcubicacion = new TableColumn<>("Ubicacion");
         tbcubicacion.setCellValueFactory(new PropertyValueFactory<>("ubic"));
+        TableColumn<MesasDAO, String> tbcestado = new TableColumn<>("Estado");
+        tbcestado.setCellValueFactory(new PropertyValueFactory<>("estado"));
 
 
         TableColumn<MesasDAO, String> tbcBorrar = new TableColumn<>("Borrar");
@@ -65,7 +70,7 @@ public class CRUDMesas extends Stage {
                     }
                 }
         );
-        tbvMesas.getColumns().addAll(tbcIdMesa, tbccantPer, tbcubicacion, tbcEditar, tbcBorrar);
+        tbvMesas.getColumns().addAll(tbcIdMesa, tbccantPer, tbcubicacion,tbcestado, tbcEditar, tbcBorrar);
         tbvMesas.setItems(objM.selAllMesas());
     }
 

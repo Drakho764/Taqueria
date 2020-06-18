@@ -33,8 +33,11 @@ public class CRUDEmpleados extends Stage {
         CrearTabla();
         btnAgregar = new Button("Agregar Empleado");
         btnAgregar.setOnAction(event -> AgregarEmpleado());
+        btnAgregar.setMinSize(120, 60);
+        btnAgregar.setMaxSize(148, 74);
         vbox.getChildren().addAll(tbvEmpleados,btnAgregar);
         escena = new Scene(vbox,620,300);
+        escena.getStylesheets().add("sample/Estilos/estiloLogin.css");
     }
     private void CrearTabla() {
         TableColumn<EmpleadosDAO,Integer> tbcIdEmpleado = new TableColumn<>("ID");
@@ -45,7 +48,7 @@ public class CRUDEmpleados extends Stage {
         TableColumn<EmpleadosDAO,String> tbcemailEmpleado = new TableColumn<>("Email");
         tbcemailEmpleado.setCellValueFactory(new PropertyValueFactory<>("emailEmpleado"));
 
-        TableColumn<EmpleadosDAO,Integer> tbctelEmpleado = new TableColumn<>("Telefono");
+        TableColumn<EmpleadosDAO,String> tbctelEmpleado = new TableColumn<>("Telefono");
         tbctelEmpleado.setCellValueFactory(new PropertyValueFactory<>("telEmpleado"));
 
         TableColumn<EmpleadosDAO,Integer> tbcedadEmpleado = new TableColumn<>("Edad");
@@ -54,6 +57,12 @@ public class CRUDEmpleados extends Stage {
         tbcdomEmpleado.setCellValueFactory(new PropertyValueFactory<>("domicilio"));
         TableColumn<EmpleadosDAO,Integer> tbcidPuesto = new TableColumn<>("Puesto");
         tbcidPuesto.setCellValueFactory(new PropertyValueFactory<>("idPuesto"));
+        TableColumn<EmpleadosDAO,Integer> tbcUs= new TableColumn<>("Usuario");
+        tbcUs.setCellValueFactory(new PropertyValueFactory<>("usuario"));
+        TableColumn<EmpleadosDAO,Integer> tbccont= new TableColumn<>("Contraseña");
+        tbccont.setCellValueFactory(new PropertyValueFactory<>("contraseña"));
+        TableColumn<EmpleadosDAO,Integer> tbcTipo= new TableColumn<>("Tipo");
+        tbcTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
 
         TableColumn<EmpleadosDAO,String> tbcBorrar = new TableColumn<>("Borrar");
         tbcBorrar.setCellFactory(
@@ -74,7 +83,7 @@ public class CRUDEmpleados extends Stage {
                 }
         );
         tbvEmpleados.getColumns().addAll(tbcIdEmpleado,tbcnomEmpleado,tbcemailEmpleado,tbctelEmpleado,tbcedadEmpleado,
-                tbcdomEmpleado,tbcidPuesto,tbcEditar,tbcBorrar);
+                tbcdomEmpleado,tbcidPuesto,tbcUs,tbccont,tbcTipo,tbcEditar,tbcBorrar);
         tbvEmpleados.setItems(objE.selAllEmpleados());
     }
     private void AgregarEmpleado() {new FrmEmpleado(tbvEmpleados,null);    }
